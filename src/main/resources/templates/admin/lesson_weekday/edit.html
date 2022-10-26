@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Изменить</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body class="container">
+<div class="col card p-3 my-5">
+
+    <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert">
+        This is a danger alert—check it out!
+    </div>
+
+    <form id="editForm" th:method="patch" th:action="'/admin/lesson_weekday/'+${lessonWeekDay.id}" th:object="${lessonWeekDay}">
+
+        <div class="form-group">
+            Название
+            <input class="form-control" id="name" required
+                   th:field="*{name}"
+                   type="text"/>
+        </div>
+
+    </form>
+
+    <form th:object="${lessonWeekDay}" id="deleteForm" th:action="'/admin/lesson_weekday/'+${lessonWeekDay.id}" th:method="delete"></form>
+
+    <div class="d-flex">
+        <button class="btn btn-success" type="submit" form="editForm">Обновить</button>
+        <button type="submit" form="deleteForm" class="btn btn-danger ml-1">🗑</button>
+        <a class="btn btn-secondary ml-1" href="/admin/lesson_weekday/">Назад</a>
+    </div>
+
+
+</div>
+
+</body>
+</html>
