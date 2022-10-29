@@ -30,12 +30,11 @@
                     <button type="button" class="btn btn-secondary my-2">Добавить</button>
                 </a>
                 <div class="collapse" id="collapseCreateForm" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <form class="col card p-3 mb-2" method="post" th:action="@{/admin/course_item/}" th:object="${courseLevel}">
+                    <form class="col card p-3 mb-2" method="post" th:action="@{/admin/course_level/}" th:object="${courseLevel}">
 
                         <div class="form-group mb-2">
-                            Название:
-                            <input th:field="*{name}" type="text" class="form-control mt-1" name="courseLevel" required>
-                            <div th:each="err : ${#fields.errors('name')}" th:text="${err}" class=""></div>
+                            Название<span class="text-danger">*</span>:
+                            <input th:field="*{name}" type="text" class="form-control mt-1" required>
                         </div>
 
                         <button type="submit" class="btn btn-light mt-2">Добавить</button>
@@ -69,7 +68,7 @@
                             <tbody>
                             <tr th:each="item : ${courseLevels}">
                                 <td class="align-middle" th:text="${item.name}"></td>
-                                <td class="align-middle text-center"><a class="btn btn-secondary" th:href="'/admin/course_item/' + ${item.id}">✏</a></td>
+                                <td class="align-middle text-center"><a class="btn btn-secondary" th:href="'/admin/course_level/' + ${item.id}">✏</a></td>
                             </tr>
                             </tbody>
                         </table>

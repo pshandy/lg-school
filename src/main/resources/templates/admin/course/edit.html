@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Изменить</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+<div class="container mt-2">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Изменить</a></li>
+        <li><a data-toggle="tab" href="#menu1">Курсы</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div id="home" class="tab-pane fade in active">
+
+            <div class="col p-3 my-5">
+
+                <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert">
+                    This is a danger alert—check it out!
+                </div>
+
+                <form id="editForm" th:method="patch" th:action="'/admin/course/'+${course.id}" th:object="${course}">
+
+                    <div class="form-group">
+                        Id
+                        <input class="form-control" readonly th:field="*{id}" type="text"/>
+                    </div>
+
+                    <div class="form-group">
+                        Название<span class="text-danger">*</span>:
+                        <input th:field="*{title}" type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        Описание:
+                        <input th:field="*{description}" type="text" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        Язык<span class="text-danger">*</span>:
+                        <select class="form-control" th:field="*{language.id}" required>
+                            <option hidden value="">Выберите язык</option>
+                            <option
+                                    th:selected="*{language.id}"
+                                    th:each="item : ${languages}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Уровень<span class="text-danger">*</span>:
+                        <select class="form-control" required th:field="*{level.id}">
+                            <option hidden value="">Выберите уровень</option>
+                            <option
+                                    th:selected="*{level.id}"
+                                    th:each="item : ${levels}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Категория<span class="text-danger">*</span>:
+                        <select class="form-control" required th:field="*{category.id}">
+                            <option hidden value="">Выберите категорию</option>
+                            <option
+                                    th:selected="*{category.id}"
+                                    th:each="item : ${categories}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                </form>
+
+                <form th:object="${course}" id="deleteForm" th:action="'/admin/course/'+${course.id}" th:method="delete"></form>
+
+                <div>
+                    <button class="btn btn-success" type="submit" form="editForm">Обновить</button>
+                    <button type="submit" form="deleteForm" class="btn btn-danger ml-1">🗑</button>
+                    <a class="btn btn-secondary ml-1" href="/admin/course/">Назад</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="menu1" class="tab-pane fade">
+
+            <div class="col p-3 my-2">
+            <form id="addStudentForm" th:method="post" th:action="@{/admin/course/add_student}">
+            <div class="form-group">
+                Добавить студента<span class="text-danger">*</span>:
+                <input type="hidden" th:value="${course.id}" name="courseId">
+                <select class="form-control mt-2" required name="studentId">
+                    <option hidden value="">Выберите студента</option>
+                    <option
+                            th:each="item : ${studentsList}"
+                            th:text="${item.lastName} + ' ' + ${item.firstName} + ' ' + ${item.middleName}"
+                            th:value="${item.id}">
+                    </option>
+                </select>
+            </div>
+                <button class="btn btn-success" form="addStudentForm" type="submit">Добавить</button>
+            </form>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ФИО</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${students}">
+                    <td class="align-middle" th:text="${item.id}"></td>
+                    <td class="align-middle" th:text="${item.lastName} + ' ' + ${item.firstName} + ' ' + ${item.middleName}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div><a class="btn btn-secondary ml-1" href="/admin/student/">Назад</a></div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

@@ -6,6 +6,7 @@ import com.pshandy.lgschool.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.channels.AcceptPendingException;
 import java.util.List;
 
 @Service
@@ -22,6 +23,9 @@ public class AccountService {
     }
 
     public Account createAccount(Account account) {
+        if (accountRepository.existsByLogin(account.getLogin())) {
+            throw new AcceptPendingException();
+        }
         return accountRepository.save(account);
     }
 

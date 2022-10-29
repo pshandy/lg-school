@@ -1,4 +1,4 @@
-package com.pshandy.lgschool.controller;
+package com.pshandy.lgschool.controller.admin;
 
 import com.pshandy.lgschool.domain.model.LessonWeekDay;
 import com.pshandy.lgschool.service.LessonWeekDayService;
@@ -45,8 +45,7 @@ public class LessonWeekDayController {
     }
 
     @PatchMapping(path = "/{id}")
-    public String updateLessonWeekDay(RedirectAttributes redirectAttributes,
-                                   @PathVariable("id") Integer id,
+    public String updateLessonWeekDay(@PathVariable("id") Integer id,
                                    @ModelAttribute LessonWeekDay lessonWeekDay,
                                    Model model) {
         try {
@@ -59,8 +58,13 @@ public class LessonWeekDayController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteLessonWeekDay(@PathVariable("id") Integer id) {
-        lessonWeekDayService.deleteLessonWeekDay(id);
+    public String deleteLessonWeekDay(RedirectAttributes redirectAttributes,
+                                   @PathVariable("id") Integer id) {
+        try {
+            lessonWeekDayService.deleteLessonWeekDay(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Не удалось удалить запись. Обнаружены внешние ссылки.");
+        }
         return "redirect:/admin/lesson_weekday/";
     }
     

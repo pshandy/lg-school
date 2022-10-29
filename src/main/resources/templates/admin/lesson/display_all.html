@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Занятия</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+
+<div th:insert="/fragments/navbar :: navbar"> </div>
+
+<div id="layoutSidenav">
+
+    <div th:insert="/fragments/navbar :: side_navbar"> </div>
+    <div id="layoutSidenav_content">
+        <main>
+
+            <div class="container-fluid px-4">
+
+                <h1 class="mt-4">Занятия</h1>
+                <a class="" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCreateForm" aria-expanded="false" aria-controls="collapseLayouts">
+                    <button type="button" class="btn btn-secondary my-2">Добавить</button>
+                </a>
+                <div class="collapse" id="collapseCreateForm" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <form class="col card p-3 mb-2" method="post" th:action="@{/admin/lesson/}" th:object="${lesson}">
+
+                        <div class="form-group mb-2">
+                            Курс<span class="text-danger">*</span>:
+                            <select class="form-control" required th:field="*{course.id}">
+                                <option hidden value="">Выберите курс</option>
+                                <option
+                                        th:each="course : ${courses}"
+                                        th:text="${course.title}"
+                                        th:value="${course.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            Преподаватель<span class="text-danger">*</span>:
+                            <select class="form-control" required th:field="*{teacher.id}">
+                                <option hidden value="">Выберите преподавателя</option>
+                                <option
+                                        th:each="teacher : ${teachers}"
+                                        th:text="${teacher.lastName} + ' ' + ${teacher.firstName} + ' ' + ${teacher.middleName}"
+                                        th:value="${teacher.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            День недели<span class="text-danger">*</span>:
+                            <select class="form-control" required th:field="*{weekday.id}">
+                                <option hidden value="">Выберите день недели</option>
+                                <option
+                                        th:each="weekday : ${weekdays}"
+                                        th:text="${weekday.name}"
+                                        th:value="${weekday.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            Начало<span class="text-danger">*</span>:
+                            <input th:field="*{startTime}" type="time" class="form-control mt-1" required>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            Начало<span class="text-danger">*</span>:
+                            <input th:field="*{endTime}" type="time" class="form-control mt-1" required>
+                        </div>
+
+                        <div class="form-group mb-2">
+                             Тип занятия<span class="text-danger">*</span>:
+                            <select class="form-control" required th:field="*{lessonType.id}">
+                                <option hidden value="">Выберите тип занятия</option>
+                                <option
+                                        th:each="type : ${types}"
+                                        th:text="${type.name}"
+                                        th:value="${type.id}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-light mt-2">Добавить</button>
+
+                    </form>
+                </div>
+
+                <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert">
+                    This is a danger alert—check it out!
+                </div>
+
+                <div class="card mb-4">
+
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        База данных
+                    </div>
+
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Курс</th>
+                                <th>Преподаватель</th>
+                                <th>День недели</th>
+                                <th>Начало</th>
+                                <th>Конец</th>
+                                <th>Тип занятия</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>#</th>
+                                <th>Курс</th>
+                                <th>Преподаватель</th>
+                                <th>День недели</th>
+                                <th>Начало</th>
+                                <th>Конец</th>
+                                <th>Тип занятия</th>
+                                <th>Действия</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+
+                            <tr th:each="item : ${lessons}">
+                                <td class="align-middle" th:text="${item.id}"></td>
+                                <td class="align-middle" th:text="${item.course.title}"></td>
+                                <td class="align-middle" th:text="${item.teacher.lastName} + ' ' + ${item.teacher.firstName} + ' ' + ${item.teacher.middleName}"></td>
+                                <td class="align-middle" th:text="${item.weekday.name}"></td>
+                                <td class="align-middle" th:text="${item.startTime}"></td>
+                                <td class="align-middle" th:text="${item.endTime}"></td>
+                                <td class="align-middle" th:text="${item.lessonType.name}"></td>
+                                <td class="align-middle text-center"><a class="btn btn-secondary" th:href="'/admin/lesson/' + ${item.id}">✏</a></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+        <footer class="py-4 bg-light mt-auto">
+        </footer>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script th:src="@{/js/scripts.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script th:src="@{/js/datatables.js}"></script>
+</body>
+</html>

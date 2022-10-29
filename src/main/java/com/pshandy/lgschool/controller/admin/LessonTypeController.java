@@ -1,8 +1,9 @@
-package com.pshandy.lgschool.controller;
+package com.pshandy.lgschool.controller.admin;
 
 import com.pshandy.lgschool.domain.model.LessonType;
 import com.pshandy.lgschool.service.LessonTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +46,7 @@ public class LessonTypeController {
     }
 
     @PatchMapping(path = "/{id}")
-    public String updateLessonType(RedirectAttributes redirectAttributes,
-                                    @PathVariable("id") Integer id,
+    public String updateLessonType(@PathVariable("id") Integer id,
                                     @ModelAttribute LessonType lessonType,
                                     Model model) {
         try {
@@ -59,9 +59,15 @@ public class LessonTypeController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteLessonType(@PathVariable("id") Integer id) {
-        lessonTypeService.deleteLessonType(id);
+    public String deleteLessonType(RedirectAttributes redirectAttributes,
+                                       @PathVariable("id") Integer id) {
+        try {
+            lessonTypeService.deleteLessonType(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Не удалось удалить запись. Обнаружены внешние ссылки.");
+        }
         return "redirect:/admin/lesson_type/";
     }
+
 
 }

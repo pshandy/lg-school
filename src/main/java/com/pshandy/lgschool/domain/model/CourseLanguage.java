@@ -3,6 +3,7 @@ package com.pshandy.lgschool.domain.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,5 +17,8 @@ public class CourseLanguage {
 
     @Column(columnDefinition="TEXT", name = "course_language_name", unique = true, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy="language")
+    private Set<Course> courses;
 
 }

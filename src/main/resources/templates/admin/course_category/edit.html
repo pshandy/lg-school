@@ -20,8 +20,8 @@
     <form id="editForm" th:method="patch" th:action="'/admin/course_category/'+${courseCategory.id}" th:object="${courseCategory}">
 
         <div class="form-group">
-            Название
-            <input class="form-control" id="name" required
+            Название<span class="text-danger">*</span>:
+            <input class="form-control" required
                    th:field="*{name}"
                    type="text"/>
         </div>

@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', event => {
     const datatablesSimple = document.getElementById('datatablesSimple');
     if (datatablesSimple) {
         new simpleDatatables.DataTable(datatablesSimple, {
-            perPage: 5,
+            perPage: 10,
             select: 10, type: "number",
             labels: {
                 placeholder: "Поиск...",

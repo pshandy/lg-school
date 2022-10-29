@@ -1,4 +1,4 @@
-package com.pshandy.lgschool.controller;
+package com.pshandy.lgschool.controller.admin;
 
 import com.pshandy.lgschool.domain.model.CourseCategory;
 import com.pshandy.lgschool.service.CourseCategoryService;
@@ -45,8 +45,7 @@ public class CourseCategoryController {
     }
 
     @PatchMapping(path = "/{id}")
-    public String updateCourseCategory(RedirectAttributes redirectAttributes,
-                                    @PathVariable("id") Integer id,
+    public String updateCourseCategory(@PathVariable("id") Integer id,
                                     @ModelAttribute CourseCategory courseCategory,
                                     Model model) {
         try {
@@ -59,8 +58,13 @@ public class CourseCategoryController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteCourseCategory(@PathVariable("id") Integer id) {
-        courseCategoryService.deleteCourseCategory(id);
+    public String deleteCourseCategory(RedirectAttributes redirectAttributes,
+                                       @PathVariable("id") Integer id) {
+        try {
+            courseCategoryService.deleteCourseCategory(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Не удалось удалить запись. Обнаружены внешние ссылки.");
+        }
         return "redirect:/admin/course_category/";
     }
 

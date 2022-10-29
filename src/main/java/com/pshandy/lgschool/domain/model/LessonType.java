@@ -3,6 +3,7 @@ package com.pshandy.lgschool.domain.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -16,5 +17,8 @@ public class LessonType {
 
     @Column(columnDefinition="TEXT", name = "lesson_type_name", unique = true, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "lessonType")
+    private Set<Lesson> lessons;
 
 }

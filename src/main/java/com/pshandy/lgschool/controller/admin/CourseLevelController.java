@@ -1,4 +1,4 @@
-package com.pshandy.lgschool.controller;
+package com.pshandy.lgschool.controller.admin;
 
 import com.pshandy.lgschool.domain.model.CourseLevel;
 import com.pshandy.lgschool.domain.repository.CourseLevelRepository;
@@ -60,8 +60,13 @@ public class CourseLevelController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public String deleteCourseLevel(@PathVariable("id") Integer id) {
-        courseLevelService.deleteCourseLevel(id);
+    public String deleteCourseLevel(RedirectAttributes redirectAttributes,
+                                       @PathVariable("id") Integer id) {
+        try {
+            courseLevelService.deleteCourseLevel(id);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Не удалось удалить запись. Обнаружены внешние ссылки.");
+        }
         return "redirect:/admin/course_level/";
     }
 

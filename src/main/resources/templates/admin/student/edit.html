@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Изменить</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body class="sb-nav-fixed">
+<div class="container mt-2">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Изменить</a></li>
+        <li><a data-toggle="tab" href="#menu1">Курсы</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div id="home" class="tab-pane fade in active">
+
+            <div class="col p-3 my-5">
+
+                <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert">
+                    This is a danger alert—check it out!
+                </div>
+
+                <form id="editForm" th:method="patch" th:action="'/admin/student/'+${student.id}" th:object="${student}">
+
+                    <div class="form-group">
+                        Id
+                        <input class="form-control" readonly th:field="*{id}" type="text"/>
+                    </div>
+
+                    <div class="form-group">
+                        Имя<span class="text-danger">*</span>:
+                        <input th:field="*{firstName}" type="text" class="form-control mt-1" required>
+                    </div>
+
+                    <div class="form-group">
+                        Фамилия<span class="text-danger">*</span>:
+                        <input th:field="*{lastName}" type="text" class="form-control mt-1" required>
+                    </div>
+
+                    <div class="form-group">
+                        Отчество:
+                        <input th:field="*{middleName}" type="text" class="form-control mt-1">
+                    </div>
+
+                    <div class="form-group">
+                        Почта<span class="text-danger">*</span>:
+                        <input th:field="*{email}" type="email" class="form-control mt-1" required>
+                    </div>
+
+                    <div class="form-group">
+                        Телефон<span class="text-danger">*</span>:
+                        <input th:field="*{phoneNumber}" type="text" class="form-control mt-1" required>
+                    </div>
+
+                    <div class="form-group">
+                        День рождения<span class="text-danger">*</span>:
+                        <input th:field="*{birthdate}" type="date" min="1940-00-00" class="form-control mt-1" required>
+                    </div>
+
+                    <div class="form-group">
+                        Аккаунт:
+                        <input th:field="*{account.login}" type="text" class="form-control mt-1">
+                    </div>
+
+                </form>
+
+                <form th:object="${student}" id="deleteForm" th:action="'/admin/student/'+${student.id}" th:method="delete"></form>
+
+                <div>
+                    <button class="btn btn-success" type="submit" form="editForm">Обновить</button>
+                    <button type="submit" form="deleteForm" class="btn btn-danger ml-1">🗑</button>
+                    <a class="btn btn-secondary ml-1" href="/admin/student/">Назад</a>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div id="menu1" class="tab-pane fade">
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Навание</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${courses}">
+                    <td class="align-middle" th:text="${item.id}"></td>
+                    <td class="align-middle" th:text="${item.title}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div><a class="btn btn-secondary ml-1" href="/admin/student/">Назад</a></div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
