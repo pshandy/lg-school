@@ -1,7 +1,6 @@
 package com.pshandy.lgschool.service;
 
-import com.pshandy.lgschool.domain.model.Student;
-import com.pshandy.lgschool.domain.model.Teacher;
+import com.pshandy.lgschool.domain.model.*;
 import com.pshandy.lgschool.domain.repository.AccountRepository;
 import com.pshandy.lgschool.domain.repository.StudentRepository;
 import com.pshandy.lgschool.domain.repository.TeacherRepository;
@@ -13,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TeacherService {
@@ -73,10 +74,20 @@ public class TeacherService {
         return teacherRepository.save(fromDb);
 
     }
-
     public void deleteTeacher(Integer id) {
         Teacher fromDb = getTeacher(id);
         teacherRepository.delete(fromDb);
+    }
+
+    public Set<Lesson> getTeacherLessons(Account account) {
+        if (account == null) {
+            return (null);
+        }
+        Optional<Teacher> teacher = teacherRepository.findByAccount(account);
+        if (teacher.isEmpty()) {
+            return (null);
+        }
+        return teacher.get().getLessons();
     }
     
 }

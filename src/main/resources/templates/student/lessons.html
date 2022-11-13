@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Дни недели</title>
+    <title>Занятия</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -25,55 +25,56 @@
 
             <div class="container-fluid px-4">
 
-                <h1 class="mt-4">Дни недели</h1>
-                <a class="" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCreateForm" aria-expanded="false" aria-controls="collapseLayouts">
-                    <button type="button" class="btn btn-secondary my-2">Добавить</button>
-                </a>
-                <div class="collapse" id="collapseCreateForm" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <form class="col card p-3 mb-2" method="post" th:action="@{/admin/lesson_weekday/}" th:object="${lessonWeekDay}">
-
-                        <div class="form-group mb-2">
-                            Название<span class="text-danger">*</span>:
-                            <input th:field="*{name}" type="text" class="form-control mt-1" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-light mt-2">Добавить</button>
-
-                    </form>
-                </div>
-
-                <div th:if="${errorMessage}" th:utext="${errorMessage}" class="alert alert-danger" role="alert">
-                    This is a danger alert—check it out!
-                </div>
+                <h1 class="mt-4">Мои занятия</h1>
 
                 <div class="card mb-4">
+
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
                         База данных
                     </div>
+
                     <div class="card-body">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Действия</th>
+                                <th>#</th>
+                                <th>Курс</th>
+                                <th>Преподаватель</th>
+                                <th>День недели</th>
+                                <th>Начало</th>
+                                <th>Конец</th>
+                                <th>Тип занятия</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Название</th>
-                                <th>Действия</th>
+                                <th>#</th>
+                                <th>Курс</th>
+                                <th>Преподаватель</th>
+                                <th>День недели</th>
+                                <th>Начало</th>
+                                <th>Конец</th>
+                                <th>Тип занятия</th>
                             </tr>
                             </tfoot>
                             <tbody>
-                            <tr th:each="item : ${lessonWeekDays}">
-                                <td class="align-middle" th:text="${item.name}"></td>
-                                <td class="align-middle text-center"><a class="btn btn-secondary" th:href="'/admin/lesson_weekday/' + ${item.id}">✏</a></td>
+
+                            <tr th:each="item : ${lessons}">
+                                <td class="align-middle" th:text="${item.id}"></td>
+                                <td class="align-middle" th:text="${item.course.title}"></td>
+                                <td class="align-middle" th:text="${item.teacher.lastName} + ' ' + ${item.teacher.firstName} + ' ' + ${item.teacher.middleName}"></td>
+                                <td class="align-middle" th:text="${item.weekday.name}"></td>
+                                <td class="align-middle" th:text="${item.startTime}"></td>
+                                <td class="align-middle" th:text="${item.endTime}"></td>
+                                <td class="align-middle" th:text="${item.lessonType.name}"></td>
                             </tr>
+
                             </tbody>
                         </table>
                     </div>
                 </div>
+
 
             </div>
         </main>

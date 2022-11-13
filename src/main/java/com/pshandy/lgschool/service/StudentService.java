@@ -1,5 +1,6 @@
 package com.pshandy.lgschool.service;
 
+import com.pshandy.lgschool.domain.model.Account;
 import com.pshandy.lgschool.domain.model.Course;
 import com.pshandy.lgschool.domain.model.Student;
 import com.pshandy.lgschool.domain.repository.AccountRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -87,6 +89,17 @@ public class StudentService {
     public Set<Course> getStudentCourses(Integer id) {
         Student fromDb = getStudent(id);
         return fromDb.getCourses();
+    }
+
+    public Set<Course> getStudentCourses(Account account) {
+        if (account == null) {
+            return (null);
+        }
+        Optional<Student> student = studentRepository.findByAccount(account);
+        if (student.isEmpty()) {
+            return (null);
+        }
+        return student.get().getCourses();
     }
 
 }

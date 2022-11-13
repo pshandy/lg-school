@@ -23,7 +23,7 @@ public class Course {
     @Column(columnDefinition="TEXT", name = "course_title", nullable = false)
     private String title;
 
-    @Column(columnDefinition="TEXT", name = "course_description")
+    @Column(columnDefinition="TEXT", name = "course_description", nullable = true)
     private String description;
 
     @ManyToOne
@@ -44,14 +44,13 @@ public class Course {
     @ManyToMany
     @JoinTable(
             name = "user_course",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id"))
     Set<Student> students;
 
     public void addStudent(Student student){
         this.students.add(student);
         student.getCourses().add(this);
     }
-
 
 }

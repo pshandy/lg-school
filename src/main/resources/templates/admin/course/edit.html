@@ -18,13 +18,13 @@
 <div class="container mt-2">
 
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Изменить</a></li>
-        <li><a data-toggle="tab" href="#menu1">Курсы</a></li>
+        <li class="active"><a data-toggle="tab" href="#home">Список студентов</a></li>
+        <li><a data-toggle="tab" href="#menu1">Изменить</a></li>
     </ul>
 
     <div class="tab-content">
 
-        <div id="home" class="tab-pane fade in active">
+        <div id="menu1" class="tab-pane fade in">
 
             <div class="col p-3 my-5">
 
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-        <div id="menu1" class="tab-pane fade">
+        <div id="home" class="tab-pane fade in active">
 
             <div class="col p-3 my-2">
             <form id="addStudentForm" th:method="post" th:action="@{/admin/course/add_student}">
@@ -135,7 +135,7 @@
                 </tbody>
             </table>
 
-            <div><a class="btn btn-secondary ml-1" href="/admin/student/">Назад</a></div>
+            <div><a class="btn btn-secondary ml-1" href="/admin/course/">Назад</a></div>
 
         </div>
 

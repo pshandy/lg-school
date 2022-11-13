@@ -31,13 +31,16 @@ INSERT INTO course (course_title, course_category_id, course_language_id, course
 INSERT INTO course (course_title, course_category_id, course_language_id, course_level_id) VALUES ('Course 6', 1, 1, 6);
 
 INSERT INTO account (account_login, account_password, account_role) VALUES ('admin', 'admin', 'ROLE_ADMIN');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('student', 'student', 'ROLE_STUDENT');
 INSERT INTO account (account_login, account_password, account_role) VALUES ('teacher', 'teacher', 'ROLE_TEACHER');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('e_student', 'e_student', 'ROLE_STUDENT');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('e_teacher', 'e_teacher', 'ROLE_TEACHER');
 
-INSERT INTO account (account_login, account_password, account_role) VALUES ('KrutinAI', 'a174deb3f', 'ROLE_USER');
-INSERT INTO account (account_login, account_password, account_role) VALUES ('LaptevaYD', 'b5f16b066', 'ROLE_USER');
-INSERT INTO account (account_login, account_password, account_role) VALUES ('KamenevPV', '2229cd752', 'ROLE_USER');
-INSERT INTO account (account_login, account_password, account_role) VALUES ('GrishkinaSK', 'adf247800', 'ROLE_USER');
-INSERT INTO account (account_login, account_password, account_role) VALUES ('VeselovNF', 'ec1e061c5', 'ROLE_USER');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('KrutinAI', 'a174deb3f', 'ROLE_STUDENT');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('LaptevaYD', 'b5f16b066', 'ROLE_STUDENT');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('KamenevPV', '2229cd752', 'ROLE_STUDENT');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('GrishkinaSK', 'adf247800', 'ROLE_STUDENT');
+INSERT INTO account (account_login, account_password, account_role) VALUES ('VeselovNF', 'ec1e061c5', 'ROLE_STUDENT');
 
 INSERT INTO teacher (teacher_birthdate, teacher_email, teacher_experience, teacher_firstname, teacher_lastname, teacher_middle_name, teacher_phone_number) VALUES ('06.02.1994', 'prohor6610@outlook.com', 3, 'Прохор', 'Ишутин', 'Прокльев  ', '+7 (976) 364-85-87');
 INSERT INTO teacher (teacher_birthdate, teacher_email, teacher_experience, teacher_firstname, teacher_lastname, teacher_middle_name, teacher_phone_number, teacher_account_id) VALUES ('10.13.1978', 'gerasim.belov@outlook.com', 20, 'Герасим', 'Белов', 'Феликсович', '+7 (927) 459-84-84', 'admin');
@@ -49,5 +52,9 @@ INSERT INTO student (student_birthdate, student_email, student_firstname, studen
 INSERT INTO student (student_birthdate, student_email, student_firstname, student_lastname, student_middle_name, student_phone_number, student_account_id) VALUES ('06.08.2001', 'serafima06021962@ya.ru', 'Серафима', 'Гришкина', 'Кирилловна', '+7 (998) 391-79-64', 'GrishkinaSK');
 INSERT INTO student (student_birthdate, student_email, student_firstname, student_lastname, student_middle_name, student_phone_number, student_account_id) VALUES ('06.02.1998', 'nikita22041978@outlook.com', 'Никита', 'Веселов', 'Феодосивич', '+7 (986) 660-85-83', 'VeselovNF');
 
+INSERT INTO user_course (student_id, course_id) VALUES (1, 1);
+INSERT INTO user_course (student_id, course_id) VALUES (1, 2);
+
 INSERT INTO lesson (lesson_end_time, lesson_start_time, lesson_course_id, lesson_type_id, lesson_teacher_id, lesson_weekday_id) VALUES ('13:30', '12:30', 1, 1, 1, 1);
 INSERT INTO lesson (lesson_end_time, lesson_start_time, lesson_course_id, lesson_type_id, lesson_teacher_id, lesson_weekday_id) VALUES ('13:30', '12:30', 1, 1, 2, 2);
+INSERT INTO lesson (lesson_end_time, lesson_start_time, lesson_course_id, lesson_type_id, lesson_teacher_id, lesson_weekday_id) VALUES ('13:30', '12:30', 2, 1, 2, 2);
